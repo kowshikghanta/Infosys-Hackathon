@@ -1,0 +1,1 @@
+"""MeetingMind AI core package."""

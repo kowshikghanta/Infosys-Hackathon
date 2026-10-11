@@ -1,0 +1,1 @@
+The project team met to review the dashboard release. Rahul will finish the API integration by Friday. Priya may handle testing, but she has not confirmed yet. The team agreed to review the interface tomorrow. The database technology is still undecided. The deployment plan needs to be finalized soon.
