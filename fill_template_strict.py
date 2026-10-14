@@ -203,8 +203,8 @@ def populate_strict():
     # Shape 15: [What does the system analyze, decide or automate?]
     set_shape_text(
         s4.shapes[15],
-        "Dual-Layer Processing:\n1. Qualcomm Cloud AI extracts entities backed by verbatim evidence quotes.\n2. Deterministic Python engine audits missing owners, deadlines, tentative flags, and vague words.",
-        font_size_pt=9.5,
+        "Dual-Layer Processing:\n1. Qualcomm Cloud AI extracts entities governed by 6 Strict Rules.\n2. Deterministic Python engine audits missing owners, deadlines, tentative flags, and vague words.",
+        font_size_pt=9,
         color=DARK_SLATE
     )
 
@@ -257,8 +257,8 @@ def populate_strict():
     # Shape 13: AI / DATA LAYER
     set_shape_text(
         s5.shapes[13],
-        "Cirrascale Qualcomm Cloud AI (/apis/v2), DeepSeek-R1-Distill-70B & Llama-3.1-8B, zero-hallucination prompt contract",
-        font_size_pt=9,
+        "Cirrascale Qualcomm Cloud AI (/apis/v2), DeepSeek-R1-Distill-70B governed by 6 Strict Rules & Pydantic v2 schemas",
+        font_size_pt=8.5,
         color=DARK_SLATE
     )
 
@@ -281,7 +281,7 @@ def populate_strict():
     # Shape 23: ENGINEERING RATIONALE
     set_shape_text(
         s5.shapes[23],
-        "• Single-Request Invariant: Guarantees staying within $3 budget (~3,820 runs).\n• Separation of Concerns: LLM handles semantics; deterministic code audits business integrity.",
+        "• Single-Request Invariant: Guarantees staying within $3 budget (~3,820 runs).\n• Separation of Concerns: LLM handles semantics under 6 rules; deterministic code audits business integrity.",
         font_size_pt=8.5,
         color=DARK_SLATE
     )
@@ -289,7 +289,7 @@ def populate_strict():
     # Shape 26: VALIDATION / RELIABILITY
     set_shape_text(
         s5.shapes[26],
-        "• 30 Automated Pytest Tests (100% Pass Rate) covering schemas, heuristics, and network drops (401, 429, timeout).\n• Fail-safe zero-credit benchmark mode.",
+        "• 31 Automated Pytest Tests (100% Pass Rate) covering schemas, heuristics, and network drops (401, 429, timeout).\n• Fail-safe zero-credit benchmark mode.",
         font_size_pt=8.5,
         color=DARK_SLATE
     )
@@ -297,7 +297,7 @@ def populate_strict():
     s5.notes_slide.notes_text_frame.text = (
         "WHAT TO SAY (55s): “Walking left to right through our architecture: the user interacts with our Streamlit frontend. "
         "The request routes to Cirrascale's Qualcomm Cloud AI hardware running DeepSeek-R1. We enforce an architectural "
-        "Single-Request Invariant to protect the $3 budget. Our test suite includes 30 unit tests covering network drops, "
+        "Single-Request Invariant to protect the $3 budget. Our test suite includes 31 unit tests covering network drops, "
         "401s, 429s, and edge cases, passing at 100%.”"
     )
 
@@ -316,8 +316,8 @@ def populate_strict():
     # Shape 8: INNOVATION / DIFFERENTIATION
     set_shape_text(
         s6.shapes[8],
-        "Dual-Layer Hybrid Intelligence: Generative extraction paired with deterministic symbolic auditing. Proactively generates clarification questions instead of guessing.",
-        font_size_pt=9.5,
+        "Dual-Layer Hybrid Intelligence: Qualcomm LLM extraction enforced by 6 Strict Rules, paired with deterministic Python auditing to eliminate hallucinations.",
+        font_size_pt=9,
         color=DARK_SLATE
     )
 
@@ -329,19 +329,30 @@ def populate_strict():
         color=DARK_SLATE
     )
 
-    # Shape 14: INPUT & MODEL
+    # Shape 14: INPUT & MODEL (Contains the 6 Strict Rules)
+    s6.shapes[14].top = Inches(2.44)
+    s6.shapes[14].height = Inches(1.05)
     set_shape_text(
         s6.shapes[14],
-        "Cirrascale Qualcomm Cloud AI running DeepSeek-R1 (for reasoning traces) and Llama-3.1 (for fast edge inference).",
-        font_size_pt=9,
+        "Qualcomm Cloud AI (DeepSeek-R1-70B) via 6 Strict Rules:\n"
+        "1. Strict Accuracy: Null if missing, never guess dates\n"
+        "2. Confirmed vs Tentative: Separate proposals & decisions\n"
+        "3. Vague Commitments: Flag 'soon'/'next week' with alerts\n"
+        "4. Verbatim Citations: Exact quote required for all items\n"
+        "5. Confidence Scoring: 0.0-1.0 indicative certainty signal\n"
+        "6. Reasoning Conciseness: <50 words (slashes latency to 25s)",
+        font_size_pt=7.2,
         color=DARK_SLATE
     )
 
     # Shape 17: QUALITY CHECK
     set_shape_text(
         s6.shapes[17],
-        "Verbatim citations enforced for all tasks/decisions; reasoning constrained to <50 words (slashing latency to 25s); Pydantic type validation; 30 unit tests.",
-        font_size_pt=8.5,
+        "Quality & Grounding Enforcement:\n"
+        "• Verbatim citations enforced for all tasks/decisions.\n"
+        "• Deterministic null-handling: zero invented owners or dates.\n"
+        "• Pydantic v2 schemas + 31 Pytest automated tests (100% pass).",
+        font_size_pt=8,
         color=DARK_SLATE
     )
 
@@ -354,9 +365,10 @@ def populate_strict():
     )
 
     s6.notes_slide.notes_text_frame.text = (
-        "WHAT TO SAY (45s): “We use Qualcomm Cloud AI running DeepSeek-R1-Distill-70B for deep reasoning and Llama-3.1-8B "
-        "for edge speed. Because we optimized prompt conciseness, extraction completes in 25 seconds. And look at the unit economics: "
-        "on Cirrascale's official pricing, an entire meeting analysis costs less than a tenth of a cent—under $1 a month for 1,000 meetings!”"
+        "WHAT TO SAY (45s): “We run DeepSeek-R1-Distill-70B on Qualcomm Cloud AI under 6 strict extraction rules: "
+        "1) Strict Factual Accuracy with null-handling, 2) Confirmed vs Tentative separation, 3) Vague commitment flagging, "
+        "4) Mandatory verbatim quotes, 5) Confidence scoring, and 6) Reasoning conciseness under 50 words to slash latency to 25s. "
+        "On Cirrascale's official pricing, an entire meeting analysis costs under a tenth of a cent—less than $1 a month for 1,000 meetings!”"
     )
 
     # =========================================================================
@@ -367,8 +379,8 @@ def populate_strict():
     # Shape 7: [Feature or user improvement]
     set_shape_text(
         s7.shapes[7],
-        "Live Audio & On-Device NPU Transcription: Whisper model integration running locally on Snapdragon X Elite NPU hardware.",
-        font_size_pt=8.5,
+        "Google Meet & MS Teams Pipeline: Zero-touch ingestion via Microsoft Graph & Google Workspace APIs, plus local Whisper on Snapdragon X Elite NPU.",
+        font_size_pt=8,
         color=DARK_SLATE
     )
 
