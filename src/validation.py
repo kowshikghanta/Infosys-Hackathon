@@ -42,6 +42,26 @@ VAGUE_DEADLINE_KEYWORDS = [
     "in the future",
     "when possible",
     "at some point",
+    "next week",
+    "next month",
+    "next quarter",
+    "next sprint",
+    "sometime next week",
+    "sometime next month",
+    "end of week",
+    "by end of week",
+    "end of sprint",
+    "in a couple weeks",
+    "in a few days",
+    "couple days",
+    "couple weeks",
+    "next monday",
+    "next tuesday",
+    "next wednesday",
+    "next thursday",
+    "next friday",
+    "next saturday",
+    "next sunday",
 ]
 
 VAGUE_COMMITMENT_PHRASES = [
@@ -189,23 +209,35 @@ def validate_action_items(
         has_vague_commitment = _text_contains_any(combined_text, VAGUE_COMMITMENT_PHRASES)
 
         if has_vague_deadline or has_vague_commitment:
+            if has_vague_deadline and "deadline" not in item.missing_information:
+                item.missing_information.append("deadline")
+
             dedup_key = f"{task_id}:vague_commitment"
             if dedup_key not in seen_warnings:
                 seen_warnings.add(dedup_key)
                 deadline_note = f" (stated as '{item.deadline_text}')" if item.deadline_text else ""
+                
+                if has_vague_deadline:
+                    clarification = (
+                        f"The deadline '{item.deadline_text}' is relative and ambiguous. "
+                        f"What specific calendar date or sprint milestone is agreed for '{task_text}'?"
+                    )
+                else:
+                    clarification = (
+                        f"Could the team define a specific date and acceptance criteria for '{task_text}'?"
+                    )
+
                 warnings.append(
                     AccountabilityWarning(
                         category="vague_commitment",
                         task_id=task_id,
-                        subject=f"Vague Commitment: {task_text[:40]}...",
+                        subject=f"Ambiguous Timeline: {task_text[:40]}...",
                         reason=(
                             f"The task '{task_text}' lacks actionable specificity{deadline_note}. "
-                            "Vague timelines frequently lead to delivery delays."
+                            "Ambiguous or relative timelines frequently lead to delivery delays."
                         ),
                         evidence=evidence_text,
-                        suggested_clarification=(
-                            f"Could the team define a specific date and acceptance criteria for '{task_text}'?"
-                        ),
+                        suggested_clarification=clarification,
                     )
                 )
 

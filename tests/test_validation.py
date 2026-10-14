@@ -73,6 +73,35 @@ def test_vague_commitment_detection():
     ]
     warnings = validate_action_items(items)
     assert any(w.category == "vague_commitment" for w in warnings)
+    assert "deadline" in items[0].missing_information
+
+
+def test_ambiguous_relative_deadlines_detection():
+    """Relative timelines like 'next week' and 'next Friday' must be flagged as ambiguous."""
+    items = [
+        ActionItem(
+            id="TASK-001",
+            task="Benchmark read replicas",
+            owner="Vikram",
+            deadline_text="next week",
+            evidence="Someone needs to benchmark read-replicas next week.",
+        ),
+        ActionItem(
+            id="TASK-002",
+            task="Submit security audit",
+            owner="Sneha",
+            deadline_text="next Friday",
+            evidence="Sneha will submit security audit by next Friday.",
+        ),
+    ]
+    warnings = validate_action_items(items)
+    assert len(warnings) == 2
+    assert all(w.category == "vague_commitment" for w in warnings)
+    assert "deadline" in items[0].missing_information
+    assert "deadline" in items[1].missing_information
+    assert "relative and ambiguous" in warnings[0].suggested_clarification
+    assert "relative and ambiguous" in warnings[1].suggested_clarification
+
 
 
 def test_unresolved_decision_detection():
