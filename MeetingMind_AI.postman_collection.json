@@ -1,0 +1,165 @@
+{
+  "info": {
+    "_postman_id": "meetingmind-ai-qualcomm-2026",
+    "name": "MeetingMind AI & Qualcomm Cloud API",
+    "description": "Postman Collection for testing both MeetingMind AI Local REST API and Cirrascale Qualcomm Cloud AI endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "CIRRASCALE_API_KEY",
+      "value": "PASTE_YOUR_INFERENCE_CLOUD_API_KEY_HERE",
+      "type": "string",
+      "description": "Your Cirrascale Inference Cloud API key from .env"
+    },
+    {
+      "key": "LOCAL_BASE_URL",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "CIRRASCALE_BASE_URL",
+      "value": "https://aisuite.cirrascale.com/apis/v2",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. MeetingMind Local API",
+      "item": [
+        {
+          "name": "1.1 Health & Provider Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL_BASE_URL}}/health",
+              "host": ["{{LOCAL_BASE_URL}}"],
+              "path": ["health"]
+            },
+            "description": "Check local API status and active Qualcomm Cloud AI provider credentials."
+          }
+        },
+        {
+          "name": "1.2 Live Connection Diagnostic Ping",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL_BASE_URL}}/health/ping",
+              "host": ["{{LOCAL_BASE_URL}}"],
+              "path": ["health", "ping"]
+            },
+            "description": "Sends a minimal diagnostic handshake request to Qualcomm Cloud AI."
+          }
+        },
+        {
+          "name": "1.3 Extract Action Items (Live AI)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"meeting_title\": \"Sprint 24 Release Sync\",\n  \"meeting_date\": \"2026-10-14\",\n  \"meeting_text\": \"The project team met to review the dashboard release. Rahul will finish the API integration by Friday. Priya may handle testing, but she has not confirmed yet. The team agreed to review the interface tomorrow. The database technology is still undecided. The deployment plan needs to be finalized soon.\"\n}"
+            },
+            "url": {
+              "raw": "{{LOCAL_BASE_URL}}/api/analyze",
+              "host": ["{{LOCAL_BASE_URL}}"],
+              "path": ["api", "analyze"]
+            },
+            "description": "Runs full MeetingMind AI analysis: entity extraction, verbatim citations, null owner enforcement, and proactive clarification generation."
+          }
+        },
+        {
+          "name": "1.4 Extract Action Items (Offline Benchmark)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"meeting_title\": \"Offline Benchmark Test\",\n  \"meeting_date\": \"2026-10-14\",\n  \"meeting_text\": \"The project team met to review the dashboard release...\",\n  \"use_sample_fallback\": true\n}"
+            },
+            "url": {
+              "raw": "{{LOCAL_BASE_URL}}/api/analyze",
+              "host": ["{{LOCAL_BASE_URL}}"],
+              "path": ["api", "analyze"]
+            },
+            "description": "Instant 0ms deterministic benchmark evaluation with zero cloud API token usage."
+          }
+        },
+        {
+          "name": "1.5 Get Sample Benchmark Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL_BASE_URL}}/api/sample",
+              "host": ["{{LOCAL_BASE_URL}}"],
+              "path": ["api", "sample"]
+            },
+            "description": "Returns raw benchmark notes and full expected structured output schema."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Cirrascale Qualcomm Cloud AI (Direct)",
+      "item": [
+        {
+          "name": "2.1 List Available Models",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CIRRASCALE_API_KEY}}"
+              }
+            ],
+            "url": {
+              "raw": "{{CIRRASCALE_BASE_URL}}/models",
+              "host": ["{{CIRRASCALE_BASE_URL}}"],
+              "path": ["models"]
+            },
+            "description": "List all LLMs hosted on Cirrascale Qualcomm Cloud hardware."
+          }
+        },
+        {
+          "name": "2.2 Direct Chat Completion (DeepSeek-R1-70B)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CIRRASCALE_API_KEY}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"DeepSeek-R1-Distill-Llama-70B\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are MeetingMind AI. Extract action items in JSON. Never hallucinate owners or dates.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Rahul will finish the API integration by Friday. Priya may handle testing, but has not confirmed yet.\"\n    }\n  ],\n  \"temperature\": 0.1,\n  \"max_tokens\": 1024\n}"
+            },
+            "url": {
+              "raw": "{{CIRRASCALE_BASE_URL}}/chat/completions",
+              "host": ["{{CIRRASCALE_BASE_URL}}"],
+              "path": ["chat", "completions"]
+            },
+            "description": "Direct OpenAI-compatible chat completion on Cirrascale Qualcomm AI Playground."
+          }
+        }
+      ]
+    }
+  ]
+}
